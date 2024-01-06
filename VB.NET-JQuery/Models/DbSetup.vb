@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 
+
 Public Class DbSetup
     Dim connection As SqlConnection
 
@@ -12,7 +13,6 @@ Public Class DbSetup
         Dim localDbConnectionString As String = "Data Source=(localdb)\Customers.Data;Initial Catalog=Customers.Data;Integrated Security=True;"
 
         connection = New SqlConnection(localDbConnectionString)
-
     End Sub
 
     Public Sub ConnectToDataBase()
@@ -21,7 +21,9 @@ Public Class DbSetup
         Catch ex As Exception
             Console.WriteLine(ex.Message)
         Finally
-            connection.Close()
+            If connection.State = ConnectionState.Open Then
+                connection.Close()
+            End If
         End Try
 
     End Sub
